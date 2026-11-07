@@ -1,0 +1,23 @@
+# Install:  sudo useradd --system --no-create-home --shell /usr/sbin/nologin lmh-can
+#           sudo install -m 0755 lmh-can /usr/local/bin/lmh-can
+#           sudo install -d /etc/lmh-can && sudo install -m 0640 -o root -g lmh-can config.json /etc/lmh-can/config.json
+#           sudo cp lmh-can.service /etc/systemd/system/ && sudo systemctl enable --now lmh-can
+# UNTESTED on the LMH.
+[Unit]
+Description=LMH CAN battery monitor
+After=network-online.target lmh-can-iface@can1.service
+Wants=network-online.target
+
+[Service]
+User=lmh-can
+SupplementaryGroups=dialout   # access to /dev/ttyACM* / ttyUSB* for RS485 devices
+ExecStart=/usr/local/bin/lmh-can run -config /etc/lmh-can/config.json
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,21 @@
+{
+  "mqtt": {
+    "host": "localhost",
+    "port": 1883,
+    "client_id": "lmh-can",
+    "topic_prefix": "lmh"
+  },
+  "buses": [
+    {
+      "interface": "can1",
+      "bitrate": 500000,
+      "device": {
+        "name": "bms1",
+        "class": "battery",
+        "protocol": "pylontech",
+        "interval_s": 1,
+        "stale_after_s": 10
+      }
+    }
+  ]
+}

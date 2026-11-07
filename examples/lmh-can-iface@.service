@@ -1,0 +1,23 @@
+# Brings a CAN interface up at boot with the right bitrate.
+# Install:  sudo cp lmh-can-iface@.service /etc/systemd/system/
+#           sudo systemctl enable --now lmh-can-iface@can1.service
+# Change bitrate / mode with a drop-in:  sudo systemctl edit lmh-can-iface@can1
+#   [Service]
+#   Environment=BITRATE=250000
+#   Environment=LISTEN_ONLY=off
+# UNTESTED on the LMH.
+[Unit]
+Description=Configure CAN interface %i
+After=sys-subsystem-net-devices-%i.device
+BindsTo=sys-subsystem-net-devices-%i.device
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+Environment=BITRATE=500000
+Environment=LISTEN_ONLY=on
+ExecStart=/bin/sh -c '/sbin/ip link set %i down; /sbin/ip link set %i type can bitrate $BITRATE listen-only $LISTEN_ONLY && /sbin/ip link set %i up'
+ExecStop=/sbin/ip link set %i down
+
+[Install]
+WantedBy=multi-user.target

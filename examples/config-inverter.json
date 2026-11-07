@@ -1,0 +1,11 @@
+{
+  "mqtt": { "host": "localhost", "port": 1883, "topic_prefix": "lmh" },
+  "rs485": [
+    {
+      "port": "/dev/ttyUSB4",
+      "baud": 9600,
+      "slave": 1,
+      "device": { "name": "inv1", "class": "inverter", "protocol": "srne" }
+    }
+  ]
+}

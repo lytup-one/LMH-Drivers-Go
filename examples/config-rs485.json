@@ -1,0 +1,13 @@
+{
+  "mqtt": { "host": "localhost", "port": 1883, "topic_prefix": "lmh" },
+  "rs485": [
+    {
+      "port": "/dev/ttyACM1",
+      "baud": 9600,
+      "parity": "N",
+      "stop_bits": 1,
+      "slave": 1,
+      "device": { "name": "bms1", "class": "battery", "protocol": "pacemodbus", "interval_s": 1, "stale_after_s": 10 }
+    }
+  ]
+}
